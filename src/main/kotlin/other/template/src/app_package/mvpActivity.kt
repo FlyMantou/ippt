@@ -1,48 +1,29 @@
 package other.template.src.app_package
 
 fun mvpAcitivityKt(
-    applicationPackage:String?,
-    activityClass:String,
-    layoutName:String,
+    pageName:String,
     packageName:String
 )="""
-package ${packageName}
+package ${packageName}.activity
 import android.os.Bundle
-import com.bigademo.baselib.base.BaseActivity
-import ${applicationPackage}.R
-import ${applicationPackage}.BR;
-import ${applicationPackage}.databinding.Activity${activityClass}Binding
-class ${activityClass}Activity : BaseActivity<${activityClass}ViewModel, Activity${activityClass}Binding>() {
-    override fun getContentView(): Int {
-        return R.layout.${layoutName}
+import androidx.fragment.app.Fragment
+import com.alibaba.android.arouter.facade.annotation.Route
+import com.lanjiyin.lib_model.base.activity.BaseFragmentActivity
+import ${packageName}.fragment.${pageName}Fragment
+
+
+@Route(path = ARouterXXX.${pageName}Activity)
+class ${pageName}Activity : BaseFragmentActivity() {
+    var fragment: ${pageName}Fragment = ${pageName}Fragment()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setDefaultTitle("")
     }
 
-    override fun init(savedInstanceState: Bundle?) {
-        super.init(savedInstanceState)
-        isShowTopBar = false
+    override fun initFragment(): Fragment {
+        return fragment
     }
 
-    override fun initViewModel() {
-        viewModel = ${activityClass}ViewModel()
-    }
-    /**
-     *	监听数据的变化
-     */
-    override fun observe() {
-
-    }
-    
-    /**
-     *  控件的点击事件
-     */
-    override fun onClick() {
-    }
-
-    override fun initData() {
-        super.initData()
-    }
-    override fun initVariableId(): Int {
-        TODO("Not yet implemented")
-    }
-    } 
+}
 """
