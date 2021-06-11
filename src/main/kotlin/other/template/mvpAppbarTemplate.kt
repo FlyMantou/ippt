@@ -3,10 +3,10 @@ package other.template
 import com.android.tools.idea.wizard.template.*
 import com.android.tools.idea.wizard.template.impl.activities.common.MIN_API
 
-val mvpActivityTemplate
+val mvpAppbarTemplate
     get() = template {
         revision = 1
-        name = "蓝基因MVP生成器-普通+列表"
+        name = "蓝基因MVP生成器-收缩布局"
         description = "适用于蓝基因合并版项目快速生成MVP页面，包含Activity，Fragment，Contract，Presenter，xml文件，注意：Manifest配置需要自行添加"
         minApi = MIN_API
         minBuildApi = MIN_API
@@ -31,9 +31,9 @@ val mvpActivityTemplate
 //        }
 
         val containRecyclerView = booleanParameter {
-            name = "contain recycler view"
-            default = false
-            help = "勾选此项，生成列表+适配器"
+            name = "生成CoordinatorLayout+AppBarLayout+CollapsingToolbarLayout+ViewPager"
+            default = true
+            help = "勾选此项，生成收缩布局"
 
         }
         val packageName = defaultPackageNameParameter
@@ -50,7 +50,7 @@ val mvpActivityTemplate
         )
 //        thumb { File("logo.png") }
         recipe = { data: TemplateData ->
-            mvpActivityRecipe(
+            mvpAppbarRecipe(
                 data as ModuleTemplateData,
                 activityClass.value,
                 packageName.value,
@@ -58,14 +58,5 @@ val mvpActivityTemplate
         }
     }
 
-
-val defaultPackageNameParameter
-    get() = stringParameter {
-        name = "Package name"
-        visible = { !isNewModule }
-        default = "com.github.flymantou.ippt"
-        constraints = listOf(Constraint.PACKAGE)
-        suggest = { packageName }
-    }
 
 

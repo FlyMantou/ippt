@@ -5,7 +5,8 @@ import java.util.regex.Pattern
 
 fun mvpFragment(
     pageName:String,
-    packageName:String
+    packageName:String,
+    isHaveList:Boolean
 )="""
 package ${packageName}.fragment
 import android.os.Bundle
@@ -14,6 +15,17 @@ import kotlinx.android.synthetic.main.fragment_${convertName(pageName)}.*
 import com.lanjiyin.lib_model.base.interfaces.IPresenter
 import ${packageName}.R
 import android.view.View
+import com.lanjiyin.lib_model.base.fragment.BasePresenterFragment
+import ${packageName}.contract.${pageName}Contract
+import ${packageName}.presenter.${pageName}Presenter
+import com.lanjiyin.lib_model.extensions.linear
+import com.lanjiyin.lib_model.extensions.adapter
+${
+    if (isHaveList) 
+        """
+        import ${packageName}.adapter.${pageName}Adapter    
+        """ else """"""
+}
 
 
 class ${pageName}Fragment :
@@ -22,6 +34,12 @@ class ${pageName}Fragment :
     , View.OnClickListener {
 
     var mPresenter = ${pageName}Presenter()
+    ${
+        if (isHaveList) 
+            """
+                var mAdapter:${pageName}Adapter? = null    
+            """ else """"""
+    }
     
     companion object {
         fun getInstance(
@@ -35,6 +53,8 @@ class ${pageName}Fragment :
         }
     }
     
+    
+    
 
     override fun getPresenter(): IPresenter<${pageName}Contract.View> {
         return mPresenter
@@ -46,7 +66,14 @@ class ${pageName}Fragment :
 
 
     override fun initView() {
-        
+        ${
+            if (isHaveList)
+                """
+                        rv_list.linear().adapter(${pageName}Adapter().also{ mAdapter = it }.apply{
+                            setEmptyView(showNullDataView())
+                        })   
+                """ else """"""
+        }
     }
 
     override fun initData() {
