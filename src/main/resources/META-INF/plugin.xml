@@ -1,10 +1,13 @@
 <idea-plugin>
     <id>com.github.flymantou.ippt</id>
-    <name>ippt</name>
-    <vendor>flymantou</vendor>
+    <name>蓝基因mvp生成器</name>
+    <vendor>黄海</vendor>
 
     <!-- Product and plugin compatibility requirements -->
     <!-- https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
+    <depends>org.jetbrains.android</depends>
+    <depends>org.jetbrains.kotlin</depends>
+    <depends>com.intellij.modules.java</depends>
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
@@ -16,4 +19,8 @@
         <listener class="com.github.flymantou.ippt.listeners.MyProjectManagerListener"
                   topic="com.intellij.openapi.project.ProjectManagerListener"/>
     </applicationListeners>
+
+    <extensions defaultExtensionNs="com.android.tools.idea.wizard.template">
+        <wizardTemplateProvider implementation="other.SamplePluginTemplateProviderImpl" />
+    </extensions>
 </idea-plugin>
