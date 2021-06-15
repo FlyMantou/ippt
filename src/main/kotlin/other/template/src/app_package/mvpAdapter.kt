@@ -12,7 +12,7 @@ import ${packageName}.R
 
 class ${pageName}Adapter : BaseQuickAdapter<String, BaseViewHolder>(R.layout.item_${convertName(pageName)}) {
 
-    override fun convert(helper: BaseViewHolder, item: String?) {
+    override fun convert(holder: BaseViewHolder, item: String) {
        
     }
 }
